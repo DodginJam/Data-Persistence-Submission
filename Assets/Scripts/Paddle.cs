@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Paddle : MonoBehaviour
 {
@@ -18,14 +19,11 @@ public class Paddle : MonoBehaviour
     {
         float input = Input.GetAxis("Horizontal");
 
-        Vector3 pos = transform.position;
-        pos.x += input * Speed * Time.deltaTime;
+        transform.Translate(Vector3.right * Speed * Time.deltaTime * input);
 
-        if (pos.x > MaxMovement)
-            pos.x = MaxMovement;
-        else if (pos.x < -MaxMovement)
-            pos.x = -MaxMovement;
-
-        transform.position = pos;
+        if (transform.position.x > MaxMovement)
+            transform.position = new Vector3(MaxMovement, transform.position.y, transform.position.z);
+        else if (transform.position.x < -MaxMovement)
+            transform.position = new Vector3(-MaxMovement, transform.position.y, transform.position.z);
     }
 }
