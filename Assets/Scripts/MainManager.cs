@@ -12,7 +12,9 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
-    
+    public Text CurrentNameText;
+
+
     private bool m_Started = false;
     private int m_Points;
     
@@ -35,6 +37,12 @@ public class MainManager : MonoBehaviour
                 brick.PointValue = pointCountArray[i];
                 brick.onDestroyed.AddListener(AddPoint);
             }
+        }
+
+        // Set the UI text for current users name.
+        if (DataManager.Instance != null)
+        {
+            CurrentNameText.text = $"Name: {DataManager.Instance.UserName}";
         }
     }
 
