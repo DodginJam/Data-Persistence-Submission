@@ -6,13 +6,6 @@ using System.IO;
 using static UnityEngine.EventSystems.EventTrigger;
 using UnityEngine.SocialPlatforms.Impl;
 
-
-
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance
