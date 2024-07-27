@@ -13,7 +13,7 @@ public class MainManager : MonoBehaviour
     public Text ScoreText;
     public GameObject GameOverText;
     public Text CurrentNameText;
-
+    public Text HighScoreText;
 
     private bool m_Started = false;
     private int m_Points;
@@ -39,11 +39,13 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        // Set the UI text for current users name.
+        // Set the UI text for current users name and the previous high score and usernam UI.
         if (DataManager.Instance != null)
         {
             CurrentNameText.text = $"Name: {DataManager.Instance.UserName}";
+            UpdateHighScoreText();
         }
+        
     }
 
     private void Update()
@@ -80,5 +82,24 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        if (DataManager.Instance != null)
+        {
+            // Will only allow the new highscore to be set if the current points are greater.
+            DataManager.Instance.SetHighScore(m_Points);
+            UpdateHighScoreText();
+
+            // Adds the highscore to the top ten leaderboards if it is within those scores.
+            DataManager.Instance.UpdateTopTenScores(m_Points);
+        }
+    }
+
+    void UpdateHighScoreText()
+    {
+        HighScoreText.text = $"Best Score: {DataManager.Instance.HighScore} Name: {DataManager.Instance.HighestScorerUserName}";
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("menu");
     }
 }

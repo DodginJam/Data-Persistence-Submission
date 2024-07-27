@@ -1,23 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public TMP_InputField UserNameInput
+    public TMP_InputField UserNameInputField
     { get; private set; }
 
     private void Awake()
     {
-        UserNameInput = GetComponentInChildren<TMP_InputField>();
+        UserNameInputField = GetComponentInChildren<TMP_InputField>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        UserNameInput.onEndEdit.AddListener(value => SetUserName(value));
+        UserNameInputField.onEndEdit.AddListener(value => SetUserName(value));
     }
 
     // Update is called once per frame
@@ -29,6 +30,20 @@ public class MenuManager : MonoBehaviour
     public void StartMainGame()
     {
         SceneManager.LoadScene("main");
+    }
+
+    public void LoadHighScores()
+    {
+        SceneManager.LoadScene("highScoresDisplay");
+    }
+
+    public void ExitApplication()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
     }
 
     public void SetUserName(string name)
